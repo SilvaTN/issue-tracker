@@ -84,6 +84,7 @@ export default function CopiedDrawer() {
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    console.log()
   };
 
   const handleDrawerClose = () => {
@@ -110,7 +111,7 @@ export default function CopiedDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Persistent drawer
+            Copied persistent drawer
           </Typography>
         </Toolbar>
       </AppBar>

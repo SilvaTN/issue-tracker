@@ -21,10 +21,25 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
 
+const DRAWER_WIDTH = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+    },
+    appBar: {
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+        }),
+    },
+    appBarShift: {
+        width: `calc(100% - ${DRAWER_WIDTH}px)`,
+        marginLeft: DRAWER_WIDTH,
+        transition: theme.transitions.create(['margin', 'width'], {
+            easing: theme.transitions.easing.easeOut,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -32,19 +47,28 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
-    mainContent: {
-        paddingTop: theme.spacing(10),
-        paddingRight: theme.spacing(9),
-        paddingBottom: theme.spacing(9),
-        paddingLeft: theme.spacing(9),
-        minHeight: "100vh",
-    }
+    drawer: {
+        width: DRAWER_WIDTH,
+        flexShrink: 0,
+    },
+    //The Paper element within the drawer is the main visible container.
+    drawerPaper: {
+        width: DRAWER_WIDTH,
+    },
+    drawerHeader: {
+        display: 'flex',
+        alignItems: 'center',
+        padding: theme.spacing(0, 1),
+        // necessary for content to be below app bar
+        ...theme.mixins.toolbar,
+        //NOT SURE WHAT THE ABOVE CODE AND COMMENT MEAN. It seems that the code just makes the drawer heading be the same size as the appBar height.
+        justifyContent: 'flex-end',
+    },
 }));
 
 
-function DrawerAndAppBar({ propPassedNavTo : navigateTo}) {
+function DrawerAndAppBar({ propPassedNavTo : navigateTo, open, setOpen }) {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
       setOpen(true);
@@ -56,18 +80,23 @@ function DrawerAndAppBar({ propPassedNavTo : navigateTo}) {
 
     return (
         <>
-        <AppBar position="fixed">
+        <AppBar 
+            position="fixed"
+            className={ `${open ? classes.appBarShift : classes.appBar}` }
+        >
             <Toolbar>
-                <IconButton 
+                {!open 
+                    ? <IconButton 
                     edge="start" 
                     className={classes.menuButton} 
                     color="inherit" 
                     aria-label="open drawer"
-                    onClick={handleDrawerOpen}
-                >
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" className={classes.title}>
+                    onClick={handleDrawerOpen} >
+                        <MenuIcon />
+                    </IconButton>
+                    : <span></span>
+                }
+                <Typography variant="h6" className={`${classes.title} ${classes.principalMargin}`} >
                     Issue Tracker
                 </Typography>
                 <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -82,8 +111,11 @@ function DrawerAndAppBar({ propPassedNavTo : navigateTo}) {
         variant="persistent"
         sr="left"
         open={open}
+        className={classes.drawer}
+        style={{width: "500px"}}
+        classes={{ paper: classes.drawerPaper }}
         >
-            <div>
+            <div className={classes.drawerHeader}>
             <IconButton onClick={handleDrawerClose}>
                 <ChevronLeftIcon />
             </IconButton>

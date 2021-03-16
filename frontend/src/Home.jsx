@@ -11,6 +11,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
+const DRAWER_WIDTH = 240;
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -22,20 +24,40 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     mainContent: {
-        paddingTop: theme.spacing(10),
-        paddingRight: theme.spacing(9),
-        paddingBottom: theme.spacing(9),
-        paddingLeft: theme.spacing(9),
-        minHeight: "100vh",
-    }
+      paddingTop: theme.spacing(10),
+      paddingRight: theme.spacing(9.2),
+      paddingBottom: theme.spacing(9),
+      paddingLeft: theme.spacing(9.2),
+      minHeight: "100vh",
+      transition: theme.transitions.create(['margin'], {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      [theme.breakpoints.down("xs")]: {
+        //whatever is in here will be applied when the theme's breakpoint is extra small or above.
+        paddingLeft: theme.spacing(8.4),
+      }
+    },
+    mainContentShift: {
+      marginLeft: DRAWER_WIDTH,
+      paddingTop: theme.spacing(10),
+      paddingRight: theme.spacing(3),
+      paddingBottom: theme.spacing(9),
+      paddingLeft: theme.spacing(3),
+      minHeight: "100vh",
+      [theme.breakpoints.down("xs")]: {
+        //whatever is in here will be applied when the theme's breakpoint is extra small or above.
+        paddingLeft: theme.spacing(2.3),
+      }
+    },
 }));
 
-const Home = () => {
+const Home = ( { open } ) => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.mainContent}>
+      <Paper className={`${classes.mainContent} ${open ? classes.mainContentShift : ""}`}>
 
         This is HOME
 
