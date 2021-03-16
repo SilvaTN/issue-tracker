@@ -30,30 +30,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Home = ({ propPassedNavTo : navigateTo}) => {
+const Home = () => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed">
-        <Toolbar>
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-                Issue Tracker
-            </Typography>
-            <IconButton aria-label="show 11 new notifications" color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                    <NotificationsIcon />
-                </Badge>
-            </IconButton>
-            <Button color="inherit" onClick={() => navigateTo("/login")}>Logout</Button>
-        </Toolbar>
-      </AppBar>
       <Paper className={classes.mainContent}>
 
-        What is Lorem Ipsum?
+        This is HOME
 
         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
         Why do we use it?
