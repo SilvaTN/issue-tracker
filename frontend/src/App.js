@@ -7,6 +7,7 @@ import { Button, CssBaseline } from "@material-ui/core";
 import DrawerAndAppBar from "./DrawerAndAppBar";
 import CopiedDrawer from './CopiedDrawer';
 import { useState } from 'react';
+import YourProjects from './YourProjects';
 
 
 function App() {
@@ -33,14 +34,16 @@ function App() {
         : <span></span>  //not sure how else to make DrawerAndAppBar go away
       }
 
-      
-
       <Switch>
         <Route path="/login">
           <SignIn propPassedNavTo={navigateTo} />
         </Route>
-        <Route path="/">
+        {/* w/out exact, the app displays <Home /> instead of going to the correct Route... unless the code of the Route is located above it, i.e. Sign displays correctly. */}
+        <Route exact path="/">
           <Home open={drawerOpen} />
+        </Route>
+        <Route path="/projects">
+          <YourProjects />
         </Route>
       </Switch>
     </>

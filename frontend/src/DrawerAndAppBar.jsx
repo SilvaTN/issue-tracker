@@ -19,6 +19,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import { withRouter } from "react-router-dom";
 
 
 const DRAWER_WIDTH = 240;
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     },
     appBarShift: {
         width: `calc(100% - ${DRAWER_WIDTH}px)`,
-        marginLeft: DRAWER_WIDTH,
+        // marginLeft: DRAWER_WIDTH, //doesn't seem to do anything
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.easeOut,
             duration: theme.transitions.duration.enteringScreen,
@@ -67,8 +68,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function DrawerAndAppBar({ propPassedNavTo : navigateTo, open, setOpen }) {
+const DrawerAndAppBar = ({ history, propPassedNavTo : navigateTo, open, setOpen }) => {
+
     const classes = useStyles();
+
+    const itemsList = [
+        { text: 'Home',
+        icon: <InboxIcon />,
+        handleClick: () => navigateTo("/"),
+        }, 
+        { text: 'Login',
+        icon: <MailIcon />,
+        handleClick: () => navigateTo("/login"),
+        },
+        { text: 'Projects',
+        icon: <InboxIcon />,
+        handleClick: () => navigateTo("/projects"),
+        }, 
+        { text: 'Drafts',
+        icon: <MailIcon />,
+        }
+    ];
 
     const handleDrawerOpen = () => {
       setOpen(true);
@@ -108,12 +128,12 @@ function DrawerAndAppBar({ propPassedNavTo : navigateTo, open, setOpen }) {
             </Toolbar>
         </AppBar>
         <Drawer
-        variant="persistent"
-        sr="left"
-        open={open}
-        className={classes.drawer}
-        style={{width: "500px"}}
-        classes={{ paper: classes.drawerPaper }}
+            variant="persistent"
+            sr="left"
+            open={open}
+            className={classes.drawer}
+            style={{width: "500px"}}
+            classes={{ paper: classes.drawerPaper }}
         >
             <div className={classes.drawerHeader}>
             <IconButton onClick={handleDrawerClose}>
@@ -122,9 +142,10 @@ function DrawerAndAppBar({ propPassedNavTo : navigateTo, open, setOpen }) {
             </div>
             <Divider />
             <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+            {itemsList.map(({ text, icon, handleClick }, index) => (
+                <ListItem button key={text} onClick={handleClick} >
+                {/*  icon && means 'if the icon is not undefined...'  */}
+                {icon && <ListItemIcon> {icon} </ListItemIcon>}
                 <ListItemText primary={text} />
                 </ListItem>
             ))}
@@ -143,4 +164,6 @@ function DrawerAndAppBar({ propPassedNavTo : navigateTo, open, setOpen }) {
     )
 }
 
-export default DrawerAndAppBar;
+//wrapping your component around withRouter gives you extra tools/functionality.
+//e.g. it passes the history variable into the DrawerAndAppBar props
+export default withRouter(DrawerAndAppBar);
