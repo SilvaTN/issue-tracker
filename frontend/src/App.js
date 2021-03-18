@@ -43,7 +43,7 @@ function App() {
           <Home open={drawerOpen} />
         </Route>
         <Route path="/projects">
-          <YourProjects />
+          <YourProjects open={drawerOpen} />
         </Route>
       </Switch>
     </>
