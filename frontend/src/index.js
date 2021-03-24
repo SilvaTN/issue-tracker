@@ -5,12 +5,12 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from "react-router-dom";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-import { pink, yellow } from '@material-ui/core/colors';
+import { pink, amber } from '@material-ui/core/colors';
 
 const myTheme = createMuiTheme({
   palette: {
     primary: pink,
-    secondary: yellow,
+    secondary: amber,
   }
 })
 
